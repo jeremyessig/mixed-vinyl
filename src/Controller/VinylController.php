@@ -20,9 +20,10 @@ class VinylController extends AbstractController
             ['song' => '5eme symphonie', 'artist' => 'Beethoven'],
             ['song' => 'Requiem', 'artist' => 'Mozart'],
             ['song' => 'Symphonie du nouveau monde', 'artist' => 'Dvorjach'],
-            ['song' => 'Concerto pour clavecin', 'artist' => 'Bach'],
+            ['song' => 'Concerto pour clavecin', 'artist' => 'roger'],
         ];
 
+        dump($tracks);
         return $this->render('vinyl/homepage.html.twig',[
             'title' => 'Magasin de musique',
             'tracks' => $tracks
@@ -37,12 +38,10 @@ class VinylController extends AbstractController
     public function browse(string $slug = null): Response
     {
 
-        if($slug){
-            $title = 'Genders: ' . u(str_replace('-', ' ', $slug))->title(true);
-        }else{
-            $title = "All genders";
-        }
+        $genre = $slug ? u(str_replace('-', ' ', $slug))->title(true) : null ;
 
-        return new Response($title);
+        return $this->render('vinyl/browse.html.twig', [
+            'genre' => $genre
+        ]);
     }
 }
